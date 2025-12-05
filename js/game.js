@@ -40,17 +40,17 @@ class Game {
     // score display
 
     ctx.fillStyle = "lightgreen";
-    ctx.fillRect(0, 0, 120, 100);
+    ctx.fillRect(40, 60, 120, 75);
 
     ctx.strokeStyle = "black";
     ctx.lineWidth = 4;
-    ctx.strokeRect(-2, -2, 120, 100);
+    ctx.strokeRect(38, 58, 120, 75);
 
     ctx.fillStyle = "black";
     ctx.font = "24px sans-serif";
     ctx.textAlign = "left";
-    ctx.fillText("Best: " + this.best, 5, 40);
-    ctx.fillText("Score: " + this.score, 5, 70);
+    ctx.fillText("Best: " + this.best, 45, 125);
+    ctx.fillText("Score: " + this.score, 45, 90);
 
     if (this.inMenu()) {
       ctx.fillStyle = "lightgreen";
@@ -84,7 +84,7 @@ class Game {
       ctx.fillText("Score: " + this.score, cnv.width / 2, cnv.height / 2 - 20);
       ctx.fillText("Best: " + this.best, cnv.width / 2, cnv.height / 2 + 20);
       ctx.font = "20px sans-serif";
-      ctx.fillText("Enter to Restart", cnv.width / 2, cnv.height / 2 + 60);
+      ctx.fillText("Click to Restart", cnv.width / 2, cnv.height / 2 + 60);
     }
   }
 }
