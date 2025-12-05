@@ -65,7 +65,7 @@ class Game {
       ctx.font = "64px sans-serif";
       ctx.fillText("Flappy Clone", cnv.width / 2, cnv.height / 2 - 80);
       ctx.font = "28px sans-serif";
-      ctx.fillText("Enter to Start", cnv.width / 2, cnv.height / 2 - 20);
+      ctx.fillText("Click to Start", cnv.width / 2, cnv.height / 2 - 20);
     }
 
     if (this.inGameOver()) {
