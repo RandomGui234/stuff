@@ -18,8 +18,11 @@ let wallsManager = new WallsManager(8, 560);
 function draw() {
   runGame();
   requestAnimationFrame(draw);
+  console.log(game.state);
 }
 window.addEventListener("load", draw);
+
+document.addEventListener("mousedown", jump);
 
 function jump() {
   if (game.isRunning()) {
@@ -27,23 +30,23 @@ function jump() {
   }
 }
 
-document.addEventListener("mousedown", jump);
 document.addEventListener("touchstart", gameKey);
-document.addEventListener("keydown", gameKey);
-document.addEventListener("keydown", (e) => {
-  if (e.code === "Space" || e.code === "ArrowUp") {
-    e.preventDefault();
-    if (game.isRunning()) {
-      player.dy = player.jumpSpeed;
-    }
-  }
-});
+document.addEventListener("mousedown", gameKey);
 
-function gameKey(e) {
-  if (game.inGameOver() && e.code === "Enter") {
+function gameKey() {
+  if (game.inGameOver() || game.inMenu()) {
     game.start();
     return;
   }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "Space" || e.code === "ArrowUp") {
+      e.preventDefault();
+      if (game.isRunning()) {
+        player.dy = player.jumpSpeed;
+      }
+    }
+  });
 
   if (game.inMenu() && e.code === "Enter") {
     game.start();
