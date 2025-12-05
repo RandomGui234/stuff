@@ -18,7 +18,6 @@ let wallsManager = new WallsManager(8, 560);
 function draw() {
   runGame();
   requestAnimationFrame(draw);
-  console.log(game.state);
 }
 window.addEventListener("load", draw);
 
