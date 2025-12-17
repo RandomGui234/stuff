@@ -2,13 +2,13 @@
 
 class Game {
   constructor() {
-    this.score = 0;
+    this.score = 9;
     this.best = localStorage.getItem("best");
     this.state = "menu"; // 'menu' | 'running' | 'gameover'
   }
 
   start() {
-    this.score = 0;
+    this.score = 9;
     this.state = "running";
     wallsManager.reset();
     player.reset();
@@ -51,6 +51,8 @@ class Game {
     ctx.textAlign = "left";
     ctx.fillText("Best: " + this.best, 45, 125);
     ctx.fillText("Score: " + this.score, 45, 90);
+
+
 
     if (this.inMenu()) {
       ctx.fillStyle = "lightgreen";
@@ -104,11 +106,27 @@ class Player {
     this.color = "#ffcc00";
     this.dy = 0;
     this.a = 0.4; // gravity
-    this.jumpSpeed = -6;
+    this.jumpSpeed = -6.5;
+    this.hitboxPaddingX = 12;
+    this.hitboxPaddingY = 10;
   }
+
+  getHitbox() {
+    return {
+      x: this.x + this.hitboxPaddingX,
+      y: this.y + this.hitboxPaddingY,
+      w: this.w - this.hitboxPaddingX * 2,
+      h: this.h - this.hitboxPaddingY * 2
+    };
+  }
+
 
   draw() {
     ctx.drawImage(charImg, this.x, this.y, this.w, this.h);
+    // visualize hitbox
+    const hb = this.getHitbox();
+    ctx.strokeStyle = "red";
+    ctx.strokeRect(hb.x, hb.y, hb.w, hb.h);
   }
 
   move() {
@@ -125,8 +143,8 @@ class Player {
       game.endGame(); // GAME OVER
     }
   }
-}
 
+}
 let topPipeImg = document.createElement("img");
 topPipeImg.src = "top.png";
 
@@ -144,11 +162,20 @@ class Wall {
   }
 
   resetHeight() {
-    const minTop = 40;
-    const maxTop = Math.max(80, cnv.height - this.gap - 80);
-    this.topHeight = randomInt(minTop, maxTop);
+
+    const GAP_MARGIN_TOP = 120;
+    const GAP_MARGIN_BOTTOM = 120;
+
+    const minGapY = GAP_MARGIN_TOP;
+    const maxGapY = cnv.height - this.gap - GAP_MARGIN_BOTTOM;
+
+    // Center the gap in a reachable range
+    const gapY = randomInt(minGapY, maxGapY);
+
+    this.topHeight = gapY;
     this.passed = false;
   }
+
 
   draw() {
     ctx.drawImage(topPipeImg, this.x, 0, this.w, this.topHeight);
@@ -165,10 +192,12 @@ class Wall {
   }
 
   collidesWithPlayer(p) {
-    const px1 = p.x,
-      py1 = p.y,
-      pw = p.w,
-      ph = p.h;
+    const hb = p.getHitbox();
+    const px1 = hb.x;
+    const py1 = hb.y;
+    const pw = hb.w;
+    const ph = hb.h;
+
     const wx1 = this.x,
       ww = this.w;
     const topH = this.topHeight;
