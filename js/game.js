@@ -8,7 +8,7 @@ class Game {
   }
 
   start() {
-    this.score = 9;
+    this.score = 0;
     this.state = "running";
     wallsManager.reset();
     player.reset();
@@ -308,4 +308,5 @@ function runGame() {
   // draw UI/menus/overlays
   game.drawFrame();
 }
+
 
