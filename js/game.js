@@ -2,7 +2,7 @@
 
 class Game {
   constructor() {
-    this.score = 9;
+    this.score = 0;
     this.best = localStorage.getItem("best");
     this.state = "menu"; // 'menu' | 'running' | 'gameover'
   }
@@ -124,9 +124,9 @@ class Player {
   draw() {
     ctx.drawImage(charImg, this.x, this.y, this.w, this.h);
     // visualize hitbox
-    const hb = this.getHitbox();
-    ctx.strokeStyle = "red";
-    ctx.strokeRect(hb.x, hb.y, hb.w, hb.h);
+    // const hb = this.getHitbox();
+    // ctx.strokeStyle = "red";
+    // ctx.strokeRect(hb.x, hb.y, hb.w, hb.h);
   }
 
   move() {
@@ -308,3 +308,4 @@ function runGame() {
   // draw UI/menus/overlays
   game.drawFrame();
 }
+
